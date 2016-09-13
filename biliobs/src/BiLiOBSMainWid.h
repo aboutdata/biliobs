@@ -27,7 +27,6 @@ class QMenu;
 class QAction;
 class BiliSceneListWidgetOperator;
 class BiliBroadcastButtonOperator;
-class BiliRecordButtonOperator;
 class IBiliAPI;
 class BiLiAudioDevSettingWid;
 class AudioDevControl;
@@ -44,22 +43,7 @@ public:
 	OutputSignalMonitor()
 		: nextOutputSignalMonitor(0) {
 	}
-	virtual OutputSignalMonitor* RecordingStart() {
-		nextOutputSignalMonitor = nextOutputSignalMonitor->RecordingStart();
-		return this;
-	}
-	virtual OutputSignalMonitor* RecordingStop() {
-		nextOutputSignalMonitor = nextOutputSignalMonitor->RecordingStop();
-		return this;
-	}
-	virtual OutputSignalMonitor* RecordingStarting() {
-		nextOutputSignalMonitor = nextOutputSignalMonitor->RecordingStarting();
-		return this;
-	}
-	virtual OutputSignalMonitor* RecordingStopping() {
-		nextOutputSignalMonitor = nextOutputSignalMonitor->RecordingStarting();
-		return this;
-	}
+
 	virtual OutputSignalMonitor* StreamDelayStarting(int sec) {
 		nextOutputSignalMonitor = nextOutputSignalMonitor->StreamDelayStarting(sec);
 		return this;
@@ -222,8 +206,6 @@ private:
 	//OBS Operator 
 	std::unique_ptr<BiliSceneListWidgetOperator> sceneListWidgetOperator;
 	std::unique_ptr<BiliBroadcastButtonOperator> broadcastButtonOperator;
-	std::unique_ptr<BiliRecordButtonOperator> recordButtonOperator;
-
 	//User Info
 	QString mUserName;
 	QPixmap mUserFace;
@@ -295,19 +277,6 @@ private:
 	void mSltStreamingStart();
 	void mSltStreamingStop(int errorcode);
 
-	public slots: //录制按钮所需的槽
-	void mSltOnRecordClicked();
-	void mSltOnRecordStartingClicked();
-	void mSltOnRecordingClicked();
-	void mSltOnRecordStoppingClicked();
-	void mSltOnRecordFailClicked();
-
-	void OnRecordTimerTick();
-
-	void mSltRecordingStart();
-	void mSltRecordingStop();
-	void mSltRecordingStarting();
-	void mSltRecordingStopping();
 
 	void mRequestReconnect();
 
@@ -315,10 +284,6 @@ protected: //OutputSignalMonitor的虚函数
 	bili::recursive_mutex outputSignalMonitorMutex;
 	OutputSignalMonitor*  outputSignalMonitor;
 
-	OutputSignalMonitor* RecordingStart() override;
-	OutputSignalMonitor* RecordingStop() override;
-	OutputSignalMonitor* RecordingStarting() override;
-	OutputSignalMonitor* RecordingStopping() override;
 	OutputSignalMonitor* StreamDelayStarting(int sec) override;
 	OutputSignalMonitor* StreamDelayStopping(int sec) override;
 	OutputSignalMonitor* StreamingStart() override;
@@ -355,7 +320,6 @@ public slots: //开始直播按钮所需的槽
 
 protected: //开始直播停止直播开始录制停止录制的快捷键
 	void OnBroadcastHotkey(bool isPressed);
-	void OnRecordHotkey(bool isPressed);
 
 public slots: //弹幕姬控制的槽
 	void mSltDanmakuSetting();
@@ -427,10 +391,6 @@ private:
 	void mStartBroadcastTimer();
 	void mStopBroadcastTimer();
 
-	time_t mRecordStartTime;
-	QTimer mRecordTickTimer;
-	void mStartRecordTimer();
-	void mStopRecordTimer();
 
 public: //for preview
 	int           mPreviewX = 0, mPreviewY = 0;

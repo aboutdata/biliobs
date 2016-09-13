@@ -30,7 +30,7 @@ private:
 	BiliSceneListWidgetOperator& operator = (const BiliSceneListWidgetOperator&) = delete;
 
 public:
-	BiliSceneListWidgetOperator(QTabWidget* tabWidget, QListWidget*listWidget, RightListToolbar* toolbar, BarrageHistory *history);
+	BiliSceneListWidgetOperator(QTabWidget* tabWidget, QListWidget*listWidget, RightListToolbar* toolbara);
 	//~BiliSceneListWidgetOperator();
 
 	QMenu* createSceneEditMenu();
@@ -119,7 +119,7 @@ private:
 	QTabWidget* mTabWidget;
 	QListWidget* mSceneItemList;
 	QPushButton* mSceneListButton;
-	BarrageHistory *const history_wgt_;
+	//BarrageHistory *const history_wgt_;
 
 	obs_scene_t* currentScene;
 	obs_source_t* currentSceneSource;

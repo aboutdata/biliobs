@@ -11,7 +11,7 @@ QWidget#LeftBottomWid{
 }
 
 QWidget#LeftTitleWid{
-	background-color: #23AEE6;
+	background-color: #E4393C;
 /*
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
@@ -274,27 +274,8 @@ QLabel#SettingLab{
 }
 
 
-QPushButton#StartRecordBtn {
-	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
-    border-radius: 4px;
-
-	font-family: "Microsoft YaHei";
-    font-size: 14px;
-    color: #23aee6;
-}
-QPushButton#StartRecordBtn:hover{
-	border: 1px solid #5bccf9;
-	color: #5bccf9;
-}
-QPushButton#StartRecordBtn:pressed{
-	border: 1px solid #209bcd;
-	color: #209bcd;
-}
-
-
 QPushButton#StartBroadcastBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -319,16 +300,9 @@ QPushButton#StartBroadcastBtn:pressed{
 }
 
 
-
-QLabel#RecTimeLab{
-	font-family: "Microsoft YaHei";
-    font-size: 10px;
-    color: #798CA7;
-}
-
 QLabel#TimeLab{
 	font-family: "Microsoft YaHei";
-    font-size: 10px;
+    font-size: 14px;
     color: #798CA7;
 }
 
@@ -347,7 +321,7 @@ QLabel#SyncRecTipLab{
 BiLiOBS Title SytleSheet
 *******************************************************/
 /*
-	background-color: #4FC1E9;
+	background-color: #E4393C;
     border-style: outset;
     border-width: 0.5px;
     border-radius: 1px;
@@ -436,7 +410,7 @@ QPushButton#CloseSetBtn:pressed{
 }
 
 QWidget#TitleWid{
-	background-color: #23AEE6;
+	background-color: #E4393C;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
@@ -476,7 +450,7 @@ QWidget#BottomWid{
 
 
 QPushButton#SetBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -503,12 +477,12 @@ QPushButton#SetBtn:pressed{
 
 QPushButton#CancelBtn{
 	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
+	border: 1px solid #E4393C;
     border-radius: 4px;
 
 	font-family: "Microsoft YaHei";
     font-size: 14px;
-    color: #23aee6;
+    color: #E4393C;
 }
 QPushButton#CancelBtn:hover{
 	border: 1px solid #5bccf9;
@@ -521,7 +495,7 @@ QPushButton#CancelBtn:pressed{
 
 
 QPushButton#OkBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -545,9 +519,11 @@ QPushButton#OkBtn:pressed{
 	background-color: #209bcd;
 }
 
-
+/******************************************************
+Settings scroller SytleSheet 
+*******************************************************/
 QAbstractScrollArea#VideoSettingScrollArea QScrollBar::handle:vertical, QAbstractScrollArea#HotkeySettingScrollArea QScrollBar::handle:vertical{
-	background: #5bccf9;
+	background: #E4393C;
 	border-radius:3px;
 }
 
@@ -650,7 +626,7 @@ QSlider::groove:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #DDDDDD, stop:1 #DDDDDD);
 }
 QSlider::sub-page:horizontal {
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QSlider::handle:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:0.3, y2:0.3, stop:0 #FFFFFF, stop:1 #DDDDDD);
@@ -666,7 +642,7 @@ QSlider#VolSlider::groove:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #DDDDDD, stop:1 #DDDDDD);
 }
 QSlider#VolSlider::sub-page:horizontal {
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QSlider#VolSlider::handle:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:0.3, y2:0.3, stop:0 #FFFFFF, stop:1 #DDDDDD);
@@ -730,7 +706,7 @@ QLabel#TipIconLab{
 	image: url(:/SysBtn/Hint);
 	font-family: "Microsoft YaHei";
     font-size: 12px;
-    color: #8FC5E3;
+    color: #E4393C;
 }
 QLabel#PropertyNameLab{
 	font-family: "Microsoft YaHei";
@@ -740,7 +716,7 @@ QLabel#PropertyNameLab{
 }
 
 QPushButton#DevAdjustButton{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -791,7 +767,7 @@ QSlider#PropertyVOlSlider::groove:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #DDDDDD, stop:1 #DDDDDD);
 }
 QSlider#PropertyVOlSlider::sub-page:horizontal {
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QSlider#PropertyVOlSlider::handle:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:0.3, y2:0.3, stop:0 #FFFFFF, stop:1 #DDDDDD);
@@ -806,12 +782,12 @@ QWidget#BtnBoxWid{
 }
 
 QWidget#PropertyTitleWid{
-	background-color: #23AEE6;
+	background-color: #E4393C;
 	border-top-left-radius: 4px;
 	border-top-right-radius: 4px;
 }
 QPushButton#AcceptedBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -827,12 +803,12 @@ QPushButton#AcceptedBtn:pressed{
 }
 QPushButton#RejectedBtn{
 	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
+	border: 1px solid #E4393C;
     border-radius: 4px;
 
 	font-family: "Microsoft YaHei";
     font-size: 14px;
-    color: #23aee6;
+    color: #E4393C;
 }
 QPushButton#RejectedBtn:hover{
 	border: 1px solid #5bccf9;
@@ -844,7 +820,7 @@ QPushButton#RejectedBtn:pressed{
 }
 
 QPushButton#BrowserBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -860,7 +836,7 @@ QPushButton#BrowserBtn:pressed{
 }
 
 QPushButton#BrushBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -878,7 +854,7 @@ QPushButton#BrushBtn:pressed{
 }
 
 QPushButton#AeroBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -902,7 +878,7 @@ QLabel#PropertyTip{
 QGroupBox#PropertyTipGroupBox{
     background-color: #EAF8FF;
     border: 1px solid;
-	border-color:  #8FC5E3;
+	border-color:  #E4393C;
     border-radius: 4px;
     margin: 0ex, 0ex;
 	margin-left: 0ex;
@@ -929,7 +905,7 @@ QComboBox:on { /* shift the text when the popup opens */
 QComboBox QAbstractItemView {
 
     border: 2px solid #EEEEEE;
-    selection-background-color: #8FC5E3;
+    selection-background-color: #E4393C;
 	border-color:#EEEEEE;
 
 	font-family: "Microsoft YaHei";
@@ -944,7 +920,7 @@ QComboBox QAbstractItemView::item {
 }
 
 QPushButton#BrowseFileBtn{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -996,7 +972,7 @@ QFontComboBox::down-arrow:on { /* shift the arrow when popup is open */
 QFontComboBox QAbstractItemView {
 
     border: 2px solid #EEEEEE;
-    selection-background-color: #8FC5E3;
+    selection-background-color: #E4393C;
 	border-color:#DDDDDD;
 
 	font-family: "Microsoft YaHei";
@@ -1054,17 +1030,17 @@ QLineEdit{
 
 QLineEdit:focus {
 	border-width: 1px;
-    border-color: #4fc1e9;
+    border-color: #E4393C;
 }
 
 QComboBox:focus {
 	border-width: 1px;
-    border-color: #4fc1e9;
+    border-color: #E4393C;
 }
 
 QPlainTextEdit:focus {
 	border-width: 1px;
-    border-color: #4fc1e9;
+    border-color: #E4393C;
 }
 
 QPushButton#ColorChangeBtn{
@@ -1072,7 +1048,7 @@ QPushButton#ColorChangeBtn{
     border-radius: 4px;
 }
 QPushButton#ColorChangeBtn:hover{
-	border-color: #4FC1E9;
+	border-color: #E4393C;
 }
 
 
@@ -1085,10 +1061,10 @@ QLabel#HintLab{
 	background-repeat: no-repeat;
 }
 QDialog#AdvancedSettingWid{
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QDialog#BiLiMsgDlg{
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QWidget#BottomBtnWid{
 	background: #FFFFFF;
@@ -1097,7 +1073,7 @@ QWidget#MsgLab{
 	background: #FFFFFF;
 }
 QDialog#BiLiPropertyDlg{
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QWidget#nameWid{
 	background: #FFFFFF;
@@ -1192,12 +1168,12 @@ AdvancedSettingWid QPushButton#HotkeyBtn:hover
 
 QPushButton#removeHotkeyButton{
 	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
+	border: 1px solid #E4393C;
     border-radius: 4px;
 
 	font-family: "Microsoft YaHei";
     font-size: 14px;
-    color: #23aee6;
+    color: #E4393C;
 }
 QPushButton#removeHotkeyButton:hover{
 	border: 1px solid #5bccf9;
@@ -1213,7 +1189,7 @@ QPushButton#removeHotkeyButton:disabled{
 }
 
 QPushButton#recordPathButton{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -1236,7 +1212,7 @@ QSlider#NRSlider::groove:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #DDDDDD, stop:1 #DDDDDD);
 }
 QSlider#NRSlider::sub-page:horizontal {
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QSlider#NRSlider::handle:horizontal {
 	background: qlineargradient(x1:0, y1:0, x2:0.3, y2:0.3, stop:0 #FFFFFF, stop:1 #DDDDDD);
@@ -1284,8 +1260,8 @@ QWidget#StackBottomWid{
 }
 
 QWidget#BiLiOBSMainWid{
-/*
-	border: 1px solid #4FC1E9;
+	/*
+	border: 1px solid #E4393C;
 	border: 5px solid red;
 	padding: 5px grean;
 	*/
@@ -1293,7 +1269,7 @@ QWidget#BiLiOBSMainWid{
 	border-top-right-radius: 4px;
 	border-bottom-left-radius: 4px;
 	border-bottom-right-radius: 4px;
-	background: #4FC1E9;
+	background: #E4393C;
 }
 QLabel#SettingTitleLab{
 	font-family: "Microsoft YaHei";
@@ -1344,7 +1320,7 @@ QLabel#NameLab{
 	font-family: "Microsoft YaHei";
     font-size: 12px;
 	font-weight: 900;
-    color: #4FC1E9;
+    color: #E4393C;
 }
 QLabel#RoomGuestDisplay{
 	font-family: "Microsoft YaHei";
@@ -1433,10 +1409,10 @@ QWidget#FollowShadowWid{
 LoginWid SytleSheet
 *******************************************************/
 QWidget#LoginCentralWidget{
-	background-color: #4FC1E9;
+	background-color: #E4393C;
 }
 QFrame#topFrame{
-	background-color: #4FC1E9;
+	background-color: #E4393C;
 }
 QFrame#centerFrame{
 	background-color: #FFFFFF;
@@ -1450,6 +1426,15 @@ Property Name Dialog SytleSheet
 QWidget#NameDlgCenterWidget {
 	background-color: #FFFFFF;
 }
+QDialog#BiliNameDialog{
+	background-color: #E4393C;
+}
+QFrame#titleFrame{
+	/*background-color: #E4393C;*/
+	background-color: #E4393C;
+}
+
+
 QRadioButton{
 	font-family: "Microsoft YaHei";
     font-size: 12px;
@@ -1498,7 +1483,7 @@ AdvancedSettingWid QGroupBox
 {
     background-color: #EAF8FF;
     border: 1px solid;
-	border-color:  #8FC5E3;
+	border-color:  #E4393C;
     border-radius: 4px;
     margin: 0ex, 0ex;
 	margin-left: 0ex;
@@ -1625,7 +1610,7 @@ QLabel#HintLab{
 	background-repeat: no-repeat;
 }
 QDialog#AdvSetttingBaseDlg{
-	background: #4FC1E9;
+	background: #E4393C;
 }
 /******************************************************
 BiLiMsgDlg SytleSheet
@@ -1702,12 +1687,12 @@ QCheckBox#DanmakuAlwaysOnCheckBox{
 
 QPushButton#TestDMBtn, QPushButton#RestoreDefaultBtn{
 	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
+	border: 1px solid #E4393C;
     border-radius: 4px;
 
 	font-family: "Microsoft YaHei";
     font-size: 14px;
-    color: #23aee6;
+    color: #E4393C;
 }
 QPushButton#TestDMBtn:hover, QPushButton#RestoreDefaultBtn:hover{
 	border: 1px solid #5bccf9;
@@ -1780,11 +1765,11 @@ QPushButton#lastPage, QPushButton#pageUpBtn, QPushButton#pageDnBtn, QPushButton#
     border-radius: 4px;
 
     border-width: 1px;
-    border-color: #23aee6;
+    border-color: #E4393C;
 
 	font: "Microsoft YaHei";
     font-size: 12px;
-    color: #4FC1E9;
+    color: #E4393C;
 
 	min-height: 26px;
 	max-height: 26px;
@@ -1867,7 +1852,7 @@ QPushButton#xButton:pressed{
 }
 
 QPushButton#okButton{
-	background-color: #23aee6;
+	background-color: #E4393C;
 
     border-style: outset;
     border-radius: 4px;
@@ -1887,7 +1872,7 @@ QPushButton#okButton:pressed{
 
 /*
 BiLiIconMsgDlg QPushButton#okButton{
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -1907,12 +1892,12 @@ BiLiIconMsgDlg QPushButton#okButton:pressed{
 
 QPushButton#cancelButton {
 	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
+	border: 1px solid #E4393C;
     border-radius: 4px;
 
 	font-family: "Microsoft YaHei";
     font-size: 14px;
-    color: #23aee6;
+    color: #E4393C;
 }
 QPushButton#cancelButton:hover{
 	border: 1px solid #5bccf9;
@@ -1995,12 +1980,12 @@ HotkeyTriggeredNotice QLabel#textLabel
 /**************************************/
 QPushButton#OperTipCancelBtn {
 	background-color: #FFFFFF;
-	border: 1px solid #23aee6;
+	border: 1px solid #E4393C;
     border-radius: 4px;
 
 	font-family: "Microsoft YaHei";
     font-size: 14px;
-    color: #23aee6;
+    color: #E4393C;
 }
 QPushButton#OperTipCancelBtn:hover{
 	border: 1px solid #5bccf9;
@@ -2020,7 +2005,7 @@ QCheckBox#todayWithoutTip::indicator::unchecked {
 
 
 OperTipCutAndRetryContentWgt QPushButton#OperTipCancelBtn {
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 
@@ -2038,7 +2023,7 @@ OperTipCutAndRetryContentWgt QPushButton#OperTipCancelBtn:pressed{
 }
 
 QPushButton#OperTipOkBtn, QPushButton#OperTipHaveKnowBtn, QPushButton#OperTipToOpentBtn, QPushButton#OperTipRePushBtn, QPushButton#OperTipRepushAndApplyBtn {
-	background-color: #23aee6;
+	background-color: #E4393C;
     border-style: outset;
     border-radius: 4px;
 

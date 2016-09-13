@@ -58,7 +58,7 @@ void BiliPropChangeEventFilter::Watch(const std::initializer_list<QWidget*>& beW
 		{
             QObject::connect(qobject_cast<SliderInterface*>(beWatched), &SliderInterface::valueChanged, this, &BiliPropChangeEventFilter::OnSilderChanged);
 		}
-		else //ç±»å‹ä¸æ”¯æŒï¼
+		else //ÀàĞÍ²»Ö§³Ö£¡
 			assert(0);
 	}
 }
@@ -110,7 +110,7 @@ BiLiPropertyDlg::BiLiPropertyDlg(QString &name, obs_sceneitem_t* pSceneItem, boo
 
 	obs_data_t* sourceSettings = obs_source_get_settings(mSrc);
 
-	//ä¿å­˜è¿›å…¥çª—å£æ—¶sourceçš„è®¾ç½®å€¼ã€‚ä¸åŒ…å«filterç­‰é™„åŠ å±æ€§
+	//±£´æ½øÈë´°¿ÚÊ±sourceµÄÉèÖÃÖµ¡£²»°üº¬filterµÈ¸½¼ÓÊôĞÔ
 	obs_data_t* backupSettings = obs_data_create();
 	obs_data_apply(backupSettings, sourceSettings);
 
@@ -125,7 +125,7 @@ BiLiPropertyDlg::BiLiPropertyDlg(QString &name, obs_sceneitem_t* pSceneItem, boo
 	obs_data_release(backupSettings);
 	obs_data_release(sourceSettings);
 
-	//å¤‡ä»½filteræ•°æ®
+	//±¸·İfilterÊı¾İ
 	mBackupFilters.reset(bili_backup_source_filter_settings(mSrc));
 }
 
@@ -139,15 +139,15 @@ void BiLiPropertyDlg::InitUI()
 
 	ui.mSourceName->setText(QApplication::translate("BiLiPropertyDlg", "source name : "));
 
-	//æ–°å»ºæºçš„æ—¶å€™å·²ç»ä»€ä¹ˆéƒ½çœ‹ä¸åˆ°äº†ï¼Œä¸‹é¢è¿™æ®µä»£ç æ´—æ´—ç¡å§
+	//ĞÂ½¨Ô´µÄÊ±ºòÒÑ¾­Ê²Ã´¶¼¿´²»µ½ÁË£¬ÏÂÃæÕâ¶Î´úÂëÏ´Ï´Ë¯°É
 #if 0
-	//æ–°å»ºæºçš„æ—¶å€™ï¼Œä¸ºäº†é˜²æ­¢å‡ºç°ç•Œé¢æ˜¾ç¤ºçš„å†…å®¹å’Œæºå®é™…å†…å®¹ä¸ä¸€è‡´çš„æƒ…å†µ
-	//ï¼ˆæ¯”å¦‚çª—å£æºï¼Œç•Œé¢ä¸Šé»˜è®¤ä¸æ˜¯ç»™å‡ºä¸€ä¸ªç©ºçš„é€‰é¡¹â€¦â€¦å› ä¸ºç©ºå­—ç¬¦ä¸²åŒ¹é…ä¸åˆ°ç°æœ‰çª—å£çš„
+	//ĞÂ½¨Ô´µÄÊ±ºò£¬ÎªÁË·ÀÖ¹³öÏÖ½çÃæÏÔÊ¾µÄÄÚÈİºÍÔ´Êµ¼ÊÄÚÈİ²»Ò»ÖÂµÄÇé¿ö
+	//£¨±ÈÈç´°¿ÚÔ´£¬½çÃæÉÏÄ¬ÈÏ²»ÊÇ¸ø³öÒ»¸ö¿ÕµÄÑ¡Ïî¡­¡­ÒòÎª¿Õ×Ö·û´®Æ¥Åä²»µ½ÏÖÓĞ´°¿ÚµÄ
 	if (mIsNewSource)
 		mSltOnSettingChanged();
 #endif
 
-	//è¿æ¥æˆªå±äº‹ä»¶åˆ°ä¸»çª—å£
+	//Á¬½Ó½ØÆÁÊÂ¼şµ½Ö÷´°¿Ú
 	BiLiOBSMainWid *mainWnd = App()->mGetMainWindow();
 	QObject::connect(this, &BiLiPropertyDlg::mSglScreenShotState, mainWnd, &BiLiOBSMainWid::onScreenShotStateChanged);
 
@@ -190,7 +190,7 @@ void BiLiPropertyDlg::mSetupPropertyUI() {
 	ui.nameEdit->setText(mSourceName);
 	mChangeEvnetFilter->Watch({ui.nameEdit});
 
-	//éŸ³é‡
+	//ÒôÁ¿
 	if (volumnAccess()) {
 
 		QLayout *vol_layout = createVolSliderLayout();
@@ -222,7 +222,7 @@ void BiLiPropertyDlg::mSltRejected(){
 		vol_slider_->revert();
 	}
 
-	//å¦‚æœè®¾ç½®æœ‰å˜åŒ–ï¼Œå¹¶ä¸”ä¸æ˜¯æ–°æ·»åŠ çš„æºï¼Œé‚£ä¹ˆè¦å°†æºçš„è®¾ç½®è¿˜åŸ
+	//Èç¹ûÉèÖÃÓĞ±ä»¯£¬²¢ÇÒ²»ÊÇĞÂÌí¼ÓµÄÔ´£¬ÄÇÃ´Òª½«Ô´µÄÉèÖÃ»¹Ô­
 	if (mIsNewSource == false && mChangeEvnetFilter->IsChangedTriggered() == true)
 	{
 		obs_source_update(mSrc, mBackupSettings);
@@ -256,7 +256,7 @@ void BiLiPropertyDlg::mSltAcceptedBtn() {
 		}
 		else {
 #if 0
-			//é‡åæ—¶å€™çš„å¤„ç†
+			//ÖØÃûÊ±ºòµÄ´¦Àí
 			QMessageBox errMsg(this);
 			errMsg.setWindowTitle(tr("Error"));
 			errMsg.setText(tr("Duplicated name!"));
@@ -328,7 +328,7 @@ void BiLiPropertyDlg::mSltOnSettingChanged()
 	if (!mSrc)
 		return;
 
-	//åœ¨æ–°æ·»åŠ æ¥æºçš„æ—¶å€™ï¼Œå› ä¸ºæ¥æºå†…å®¹æ˜¯éšè—çš„ï¼Œæ‰€ä»¥ä¸éœ€è¦æ›´æ–°
+	//ÔÚĞÂÌí¼ÓÀ´Ô´µÄÊ±ºò£¬ÒòÎªÀ´Ô´ÄÚÈİÊÇÒş²ØµÄ£¬ËùÒÔ²»ĞèÒª¸üĞÂ
 	if (mIsNewSource)
 		return;
 
@@ -404,16 +404,16 @@ QGroupBox* BiLiPropertyDlg::CreateTipGroupBox(const QString& text)
 //filter mgr
 
 /*
-mask_filter å›¾åƒæ©ç /æ··åˆ
-crop_filter å‰ªè£
-gain_filter å¢ç›Š
-color_filter è‰²å½©æ ¡æ­£
-scroll_filter æ»šåŠ¨
-color_key_filter è‰²å€¼
-sharpness_filter é”åŒ–
-chroma_key_filter è‰²åº¦é”®
-async_delay_filter è§†é¢‘å»¶è¿Ÿ(å¼‚æ­¥)
-noise_gate_filter å™ªéŸ³é˜ˆå€¼
+mask_filter Í¼ÏñÑÚÂë/»ìºÏ
+crop_filter ¼ô²Ã
+gain_filter ÔöÒæ
+color_filter É«²ÊĞ£Õı
+scroll_filter ¹ö¶¯
+color_key_filter É«Öµ
+sharpness_filter Èñ»¯
+chroma_key_filter É«¶È¼ü
+async_delay_filter ÊÓÆµÑÓ³Ù(Òì²½)
+noise_gate_filter ÔëÒôãĞÖµ
 */
 
 
@@ -548,7 +548,7 @@ bool BiLiPropertyDlg::volumnAccess()
 {
 	uint32_t flags = obs_source_get_output_flags(mSrc);
 
-	//ä¸èƒ½è®¾ç½®æ§åˆ¶éŸ³é‡
+	//²»ÄÜÉèÖÃ¿ØÖÆÒôÁ¿
 	if (0 == (flags & OBS_SOURCE_AUDIO))
 		return false;
 

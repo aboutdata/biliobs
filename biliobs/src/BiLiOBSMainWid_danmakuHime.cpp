@@ -153,7 +153,7 @@ void BiLiOBSMainWid::mSltDanmakuSetting()
     auto danmaku_history_setting_wid = new DanmakuHistorySettingWid();
     danmaku_history_setting_wid->setObjectName("DanmakuHistorySettingWid");
     dmSettingDlg->addStackedPageWid_(2, danmaku_history_setting_wid);
-    QObject::connect(danmaku_history_setting_wid, &DanmakuHistorySettingWid::modeChanged, ui.history_wgt, &BarrageHistory::setFreshMode);
+    //QObject::connect(danmaku_history_setting_wid, &DanmakuHistorySettingWid::modeChanged, ui.history_wgt, &BarrageHistory::setFreshMode);
 
 	dmSettingDlg->setAttribute(Qt::WidgetAttribute::WA_DeleteOnClose);
 	dmSettingDlg->setWindowFlags(Qt::FramelessWindowHint);
@@ -164,6 +164,6 @@ void BiLiOBSMainWid::mSltDanmakuSetting()
 
 void BiLiOBSMainWid::loadDanmakuHistoryConfig()
 {
-    ui.history_wgt->initByConfig(mBasicConfig);
+    //ui.history_wgt->initByConfig(mBasicConfig);
 }
 

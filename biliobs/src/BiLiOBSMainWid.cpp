@@ -9,7 +9,6 @@
 #include "BiliOBSUtility.hpp"
 #include "display-helpers.hpp"
 #include "bili_obs_source_helper.h"
-#include "BiliRecordButtonOperator.hpp"
 #include "BiliBroadcastButtonOperator.hpp"
 #include "HotkeyManager.h"
 
@@ -75,8 +74,6 @@ extern "C" {
 
 
 extern const char* BILI_HOTKEY_BROADCAST_NAME;
-extern const char* BILI_HOTKEY_RECORD_NAME;
-
 //////////////////////////// OBSBasic Static Method ////////////////////////////
 static inline enum video_format GetVideoFormatFromName(const char *name) {
 
@@ -476,13 +473,11 @@ void BiLiOBSMainWid::mSetupUI(){
 	mCreateRightMenu();
 
 	sceneListWidgetOperator.reset(
-		new BiliSceneListWidgetOperator(ui.RightSceneTabWid, ui.SceneOneListWid, ui.SceneOneToolBar, ui.history_wgt)
+		//new BiliSceneListWidgetOperator(ui.RightSceneTabWid, ui.SceneOneListWid, ui.SceneOneToolBar, ui.history_wgt)
+		new BiliSceneListWidgetOperator(ui.RightSceneTabWid, ui.SceneOneListWid, ui.SceneOneToolBar)
 		);
 	broadcastButtonOperator.reset(
 		new BiliBroadcastButtonOperator(ui.StartBroadcastBtn)
-		);
-	recordButtonOperator.reset(
-		new BiliRecordButtonOperator(ui.StartRecordBtn)
 		);
 
 	auto ShortCut = new QShortcut(QKeySequence(Qt::Key_Delete), this);
@@ -491,7 +486,7 @@ void BiLiOBSMainWid::mSetupUI(){
 	});
 
 	HotkeyManager::GetInstance()->Register(BILI_HOTKEY_BROADCAST_NAME, CreateFrontendHotkeyCallback(this, &BiLiOBSMainWid::OnBroadcastHotkey));
-	HotkeyManager::GetInstance()->Register(BILI_HOTKEY_RECORD_NAME, CreateFrontendHotkeyCallback(this, &BiLiOBSMainWid::OnRecordHotkey));
+
 
 	mAudioDevSettingWid = new BiLiAudioDevSettingWid();
 	mBiLiUserInfoWid = new BiLiUserInfoWid();
@@ -578,25 +573,21 @@ void BiLiOBSMainWid::mSetupConnection(){
 	QObject::connect(broadcastButtonOperator.get(), SIGNAL(ConnectingClickedSignal()), this, SLOT(OnWorkingInProgressClicked()));
 	QObject::connect(broadcastButtonOperator.get(), SIGNAL(DisconnectingClickedSignal()), this, SLOT(OnWorkingInProgressClicked()));
 
-	QObject::connect(recordButtonOperator.get(), SIGNAL(IdleClickedSignal()), this, SLOT(mSltOnRecordClicked()));
-	QObject::connect(recordButtonOperator.get(), SIGNAL(StartingClickedSignal()), this, SLOT(mSltOnRecordStartingClicked()));
-	QObject::connect(recordButtonOperator.get(), SIGNAL(RecordingClickedSignal()), this, SLOT(mSltOnRecordingClicked()));
-	QObject::connect(recordButtonOperator.get(), SIGNAL(StoppingClickedSignal()), this, SLOT(mSltOnRecordStoppingClicked()));
-	QObject::connect(recordButtonOperator.get(), SIGNAL(FailedClickedSignal()), this, SLOT(mSltOnRecordFailClicked()));
-
 	//设置按钮
 	QObject::connect(ui.SettingBtn, SIGNAL(clicked()), this, SLOT(mSltSettingBtn()));
 
 	//计时
 	QObject::connect(&mBroadcastTickTimer, SIGNAL(timeout()), this, SLOT(OnBroadcastTimerTick()));
-	QObject::connect(&mRecordTickTimer, SIGNAL(timeout()), this, SLOT(OnRecordTimerTick()));
 
 	//弹幕历史
 	connect(dmOpt_, &DanmakuOpt::netData, this, &BiLiOBSMainWid::onNetDialog);
 
 	//如果隐藏，会造成下面的按钮上移，最终导致点了按钮出了时间按钮位置变了
-	ui.TimeLab->setText(" ");
-	ui.RecTimeLab->setText(" ");
+	ui.TimeLab->setText("00:00:00");
+
+	//隐藏 更多标题栏的更多按钮和 个人用户信息 2016/9/12
+	ui.MoreBtn->hide();
+	ui.UserInfoBtn->hide();
 
 }
 
@@ -1075,7 +1066,7 @@ void BiLiOBSMainWid::OnUserInfoGot(QString userName, QPixmap userFace)
 }
 
 void BiLiOBSMainWid::onNetDialog(const QString &msg) {
-	ui.history_wgt->insertData(msg);
+	//ui.history_wgt->insertData(msg);
 }
 
 bool BiLiOBSMainWid::onBroadcastRoomRequested(int code)

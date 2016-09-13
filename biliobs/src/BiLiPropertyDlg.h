@@ -147,7 +147,7 @@ protected:
 	obs_sceneitem_t* mSceneItem;
 	obs_source_t* mSrc;
 
-	//å¼€å§‹-å„ç§å¤‡ä»½æ•°æ®
+	//¿ªÊ¼-¸÷ÖÖ±¸·İÊı¾İ
 	OBSData mBackupSettings;
 	vec2 mBackupItemPos;
 	vec2 mBackupItemScale;
@@ -156,7 +156,7 @@ protected:
 	vec2 mBackupBounds;
 
 	std::unique_ptr<BiliFiltersBackup> mBackupFilters;
-	//ç»“æŸ-å„ç§å¤‡ä»½æ•°æ®
+	//½áÊø-¸÷ÖÖ±¸·İÊı¾İ
 
 	std::unique_ptr<BiliPropChangeEventFilter> mChangeEvnetFilter;
 
@@ -237,7 +237,7 @@ private:
 class BiLiPropertyDialogFactory
 {
 protected:
-	virtual ~BiLiPropertyDialogFactory() {} //æ‰€æœ‰çš„factoryå¯¹è±¡éƒ½æ˜¯staticçš„ï¼Œæ‰€ä»¥ä¸è¦é‡Šæ”¾
+	virtual ~BiLiPropertyDialogFactory() {} //ËùÓĞµÄfactory¶ÔÏó¶¼ÊÇstaticµÄ£¬ËùÒÔ²»ÒªÊÍ·Å
 public:
 	BiLiPropertyDialogFactory() : mNextFactory(0) {}
 	virtual BiLiPropertyDlg* Create(QString &name, obs_sceneitem_t* pSceneItem, bool isNewSource, QWidget *parent = 0) = 0;
@@ -247,7 +247,7 @@ public:
 };
 
 extern BiLiPropertyDialogFactory* g_BiLiPropertyDialogFactoryList;
-extern BiLiPropertyDialogFactory* g_curBiLiPropertyDialogFactoryList; //åˆ«è®¿é—®è¿™ä¸¤ä¸ªï¼Œæ„å»ºè¿‡ç¨‹ä¸­ç”¨çš„
+extern BiLiPropertyDialogFactory* g_curBiLiPropertyDialogFactoryList; //±ğ·ÃÎÊÕâÁ½¸ö£¬¹¹½¨¹ı³ÌÖĞÓÃµÄ
 
 BiLiPropertyDialogFactory* GetBiLiPropertyDialogFactory(const char* sourceId);
 

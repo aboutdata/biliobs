@@ -1862,50 +1862,6 @@
               <number>2</number>
              </property>
              <item>
-              <widget class="QLabel" name="RecTimeLab">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>50</horstretch>
-                 <verstretch>16</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>50</width>
-                 <height>16</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>99999</width>
-                 <height>16</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>00:00:00</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_11">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Preferred</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>8</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QLabel" name="TimeLab">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1943,47 +1899,6 @@
              <property name="bottomMargin">
               <number>12</number>
              </property>
-             <item>
-              <widget class="QPushButton" name="StartRecordBtn">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>100</width>
-                 <height>40</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>Start Record</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_10">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Minimum</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>10</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
              <item>
               <widget class="QPushButton" name="StartBroadcastBtn">
                <property name="sizePolicy">
@@ -2277,31 +2192,6 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="SceneTwoTab">
-      <attribute name="title">
-       <string>HistoryDanmaku</string>
-      </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="BarrageHistory" name="history_wgt" native="true"/>
-       </item>
-      </layout>
-     </widget>
     </widget>
    </item>
   </layout>
@@ -2311,12 +2201,6 @@
    <class>RightListToolbar</class>
    <extends>QWidget</extends>
    <header>RightListToolbar.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>BarrageHistory</class>
-   <extends>QWidget</extends>
-   <header>barrage_history.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

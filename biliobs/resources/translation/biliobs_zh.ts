@@ -549,7 +549,7 @@ content</source>
     <message>
         <location line="-14"/>
         <source>Bilibili Broadcaster</source>
-        <translation>哔哩哔哩直播姬</translation>
+        <translation type="unfinished">京东直播JOY</translation>
     </message>
     <message>
         <location filename="../../src/BiLiOBSMainWid_danmakuHime.cpp" line="+1"/>

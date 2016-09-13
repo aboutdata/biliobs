@@ -30,7 +30,6 @@ extern const char* BILI_HOTKEY_SWITCH_SCENE_NAME;
 extern const char* BILI_HOTKEY_MUTE;
 
 extern const char* BILI_HOTKEY_BROADCAST_NAME;
-extern const char* BILI_HOTKEY_RECORD_NAME;
 
 enum { SRCTYPE_MICROPHONE = 1, SRCTYPE_SYSTEMAUDIO, SRCTYPE_SCENE, SRCTYPE_FRONTEND };
 
@@ -372,7 +371,6 @@ HotkeySettingWid::HotkeySettingWid(ConfigFile& config, QWidget *parent)
 	broadcast_record_hotkey_names[] =
 	{
 		BILI_HOTKEY_BROADCAST_NAME, tr("Broadcast Start/Stop"),
-		BILI_HOTKEY_RECORD_NAME, tr("Record Start/Stop"),
 	};
 
 	for (int i = 0; i < sizeof(broadcast_record_hotkey_names) / sizeof(*broadcast_record_hotkey_names); ++i)

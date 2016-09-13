@@ -40,7 +40,7 @@
 
 const char* BILI_HOTKEY_SWITCH_SCENE_NAME = "biliobs.switch-to-scene";
 
-BiliSceneListWidgetOperator::BiliSceneListWidgetOperator(QTabWidget* tabWidget, QListWidget* listWidget, RightListToolbar* toolbar, BarrageHistory *history)
+BiliSceneListWidgetOperator::BiliSceneListWidgetOperator(QTabWidget* tabWidget, QListWidget* listWidget, RightListToolbar* toolbar)
 	: isInSelectedUpdating(false)
 	, mTabWidget(tabWidget)
 	, mSceneItemList(listWidget)
@@ -49,8 +49,6 @@ BiliSceneListWidgetOperator::BiliSceneListWidgetOperator(QTabWidget* tabWidget, 
 	, mSceneListButton(0)
 	, disableSceneMenuOnce(false)
 	, mSceneListMenu(0)
-
-	, history_wgt_(history)
 {
 	//OBSÈ«¾ÖÐÅºÅ
 	signal_handler_t* globalSignalHandler = obs_get_signal_handler();
@@ -180,8 +178,8 @@ void BiliSceneListWidgetOperator::OnSceneTabBarClicked(int index)
 {
 	if (index == 0 && mTabWidget->currentIndex() == 0)
 		OnSceneListButtonClicked();
-	else if (index == 1)
-		history_wgt_->updateData();
+	//else if (index == 1)
+		//history_wgt_->updateData();
 }
 
 void BiliSceneListWidgetOperator::OnSceneListMenuItemClicked()

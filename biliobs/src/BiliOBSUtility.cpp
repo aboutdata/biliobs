@@ -740,7 +740,6 @@ std::wstring BiliGetFileVertion(std::wstring fullName) {
 extern const char* BILI_HOTKEY_SWITCH_SCENE_NAME;
 extern const char* BILI_HOTKEY_MUTE;
 extern const char* BILI_HOTKEY_BROADCAST_NAME;
-extern const char* BILI_HOTKEY_RECORD_NAME;
 
 obs_data_t* BiliFrontendHotkeyConfig::SaveFrontendHotkeys()
 {
@@ -751,8 +750,7 @@ obs_data_t* BiliFrontendHotkeyConfig::SaveFrontendHotkeys()
 	{
 		BILI_HOTKEY_SWITCH_SCENE_NAME,
 		BILI_HOTKEY_MUTE,
-		BILI_HOTKEY_BROADCAST_NAME,
-		BILI_HOTKEY_RECORD_NAME
+		BILI_HOTKEY_BROADCAST_NAME
 	};
 
 	for (int i = 0; i < sizeof(hotkeyNames) / sizeof(*hotkeyNames); ++i)

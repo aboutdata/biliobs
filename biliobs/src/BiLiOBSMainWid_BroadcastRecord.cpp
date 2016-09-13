@@ -5,7 +5,6 @@
 #include <QTimer>
 #include "BiliOBSUtility.hpp"
 #include "BiliBroadcastButtonOperator.hpp"
-#include "BiliRecordButtonOperator.hpp"
 #include "../biliapi/IBiliApi.h"
 #include "BiliGlobalDatas.hpp"
 #include <time.h>
@@ -35,16 +34,13 @@
 #define BITRATE_UPDATE_SECONDS 2
 
 const char* BILI_HOTKEY_BROADCAST_NAME = "biliobs.broadcast-onoff";
-const char* BILI_HOTKEY_RECORD_NAME = "biliobs.record-onoff";
 
 class OutputSignalMonitor_DoReconnect : public OutputSignalMonitor
 {
 	BasicOutputHandler* outputHandler_;
 	obs_service_t* obsService_;
 	BiliBroadcastButtonOperator* broadcastBtnOp_;
-	BiliRecordButtonOperator* recordBtnOp_;
 
-	bool isRecording_;
 	bool isStreaming_;
 
 	BiLiOBSMainWid* mainWid_;
@@ -57,24 +53,21 @@ class OutputSignalMonitor_DoReconnect : public OutputSignalMonitor
 	static QString tr(const char* s) { return QApplication::translate("OutputSignalMonitor_DoReconnect", s, 0); }
 
 public:
-	OutputSignalMonitor_DoReconnect(BasicOutputHandler* outputHandler, obs_service_t* obsService, BiLiOBSMainWid* mainWid, BiliBroadcastButtonOperator* broadcastBtnOp, BiliRecordButtonOperator* recordBtnOp)
+	OutputSignalMonitor_DoReconnect(BasicOutputHandler* outputHandler, obs_service_t* obsService, BiLiOBSMainWid* mainWid, BiliBroadcastButtonOperator* broadcastBtnOp)
 	{
 		outputHandler_ = outputHandler;
 		obsService_ = obsService;
 		leftTasks = 0;
 		mainWid_ = mainWid;
 		broadcastBtnOp_ = broadcastBtnOp;
-		recordBtnOp_ = recordBtnOp;
 	}
 
 	OutputSignalMonitor* Start(OutputSignalMonitor* next)
 	{
 		nextOutputSignalMonitor = next;
 
-		isRecording_ = outputHandler_->RecordingActive();
 		isStreaming_ = outputHandler_->StreamingActive();
-
-		if (isRecording_ || isStreaming_)
+		if (isStreaming_)
 		{
             msgDlg_.reset(OperTipDlgFactory::makeDlg(OperTipDlgFactory::NEED_REPUSH));
 			msgDlg_->exec();
@@ -82,15 +75,9 @@ public:
 			if (msgDlg_->result() == QDialog::Accepted)
 			{
 				isDisconnecting = true;
-				isRecording_ = outputHandler_->RecordingActive();
+			
 				isStreaming_ = outputHandler_->StreamingActive();
-
-				if (isRecording_)
-				{
-					++leftTasks;
-					QueueTask(std::bind(&OutputSignalMonitor_DoReconnect::StopRecordingTask, this));
-				}
-
+		
 				if (isStreaming_)
 				{
 					++leftTasks;
@@ -116,13 +103,6 @@ public:
 		}
 	}
 
-	OutputSignalMonitor* RecordingStop() override
-	{
-		recordBtnOp_->SetIdle();
-		nextOutputSignalMonitor = nextOutputSignalMonitor->RecordingStop();
-		return finishOneTask();
-	}
-
 	OutputSignalMonitor* StreamingStop(int errorcode) override
 	{
 		//如果不是在正在断开的时候进了这里，那么就是推流失败了……
@@ -136,14 +116,6 @@ public:
 		return finishOneTask();
 	}
 
-	OutputSignalMonitor* RecordingStart()
-	{
-		nextOutputSignalMonitor = nextOutputSignalMonitor->RecordingStart();
-		if (isRecording_)
-			return finishOneTask();
-		else
-			return this;
-	}
 
 	OutputSignalMonitor* StreamingStart()
 	{
@@ -160,21 +132,10 @@ public:
 		return 0;
 	}
 
-	void* StartRecordingTask()
-	{
-		outputHandler_->StartRecording();
-		return 0;
-	}
 
 	void* StopStreamingTask()
 	{
 		outputHandler_->StopStreaming();
-		return 0;
-	}
-
-	void* StopRecordingTask()
-	{
-		outputHandler_->StopRecording();
 		return 0;
 	}
 
@@ -187,13 +148,6 @@ public:
 				isDisconnecting = false;
 
 				DoReset();
-
-				if (isRecording_)
-				{
-					++leftTasks;
-					recordBtnOp_->SetStarting();
-					mainWid_->mInvokeProcdure(std::bind(&OutputSignalMonitor_DoReconnect::StartRecordingTask, this));
-				}
 
 				if (isStreaming_)
 				{
@@ -452,69 +406,69 @@ void BiLiOBSMainWid::OnRetryButtonClicked()
 
 void* BiLiOBSMainWid::mRetriveUserInfo()
 {
-	bool succeed = false;
-	try
-	{
-		//获取房间信息
-		BiliJsonPtr roomInfoResult = biliApi->GetRoomInfo(lexical_cast<int>(gBili_mid));
+	//bool succeed = false;
+	//try
+	//{
+	//	//获取房间信息
+	//	BiliJsonPtr roomInfoResult = biliApi->GetRoomInfo(lexical_cast<int>(gBili_mid));
 
-		int code = roomInfoResult->GetVal<JSON_INTEGER>({ "code" });
-		if (code < 0)
-		{
-			//获取房间信息失败
-			throw BiliCustomException(code, roomInfoResult->GetVal<JSON_STRING>({ "msg" }));
-		}
+	//	int code = roomInfoResult->GetVal<JSON_INTEGER>({ "code" });
+	//	if (code < 0)
+	//	{
+	//		//获取房间信息失败
+	//		throw BiliCustomException(code, roomInfoResult->GetVal<JSON_STRING>({ "msg" }));
+	//	}
 
-		succeed = true;
+	//	succeed = true;
 
-		//填写用户名和房间信息
-		//biliUi->usernameButton->setText(roomInfoResult->GetVal<JSON_STRING>({ "data", "uname" }).c_str());
-		gBili_roomId = roomInfoResult->GetVal<JSON_INTEGER>({ "data", "roomId" });
+	//	//填写用户名和房间信息
+	//	//biliUi->usernameButton->setText(roomInfoResult->GetVal<JSON_STRING>({ "data", "uname" }).c_str());
+	//	gBili_roomId = roomInfoResult->GetVal<JSON_INTEGER>({ "data", "roomId" });
 
-		//获取弹幕服务器地址
-		BiliJsonPtr apiRoomInfoResult = biliApi->GetAPIRoomInfo(gBili_roomId);
-		gBili_danmakuServer = apiRoomInfoResult->GetVal<JSON_STRING>({ "data", "cmt" });
+	//	//获取弹幕服务器地址
+	//	BiliJsonPtr apiRoomInfoResult = biliApi->GetAPIRoomInfo(gBili_roomId);
+	//	gBili_danmakuServer = apiRoomInfoResult->GetVal<JSON_STRING>({ "data", "cmt" });
 
-		QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNormalIdle");
-	}
-	catch (BiliCustomException& customException)
-	{
-		switch (customException.code())
-		{
-		case -700: //用户未开通直播间时候的错误码
-			succeed = false;
-			isRoomIdGot = false;
-			gBili_roomId = -1;
-			QMetaObject::invokeMethod(this, "onBroadcastRoomRequested", Q_ARG(int, 1));
-			QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNormalIdle");
-			break;
-		default:
-			QMetaObject::invokeMethod(this, "OnErrorMessage", Q_ARG(QString, QString(customException.what())));
-			QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNotRetrived");
-			break;
-		}
-		return 0;
-	}
-	catch (CUrlNetworkException&)
-	{
-		//获取推流信息失败，网络错误
-		QMetaObject::invokeMethod(this, "OnErrorMessage", Q_ARG(QString, QString(tr("Fail to retrieve pushstream information. Network error."))));
-		QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNotRetrived");
-		return 0;
-	}
-	catch (JsonDataError&)
-	{
-		SaveHttpLogToFile(biliApi->GetLastUrl(), biliApi->GetLastContent());
+	//	QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNormalIdle");
+	//}
+	//catch (BiliCustomException& customException)
+	//{
+	//	switch (customException.code())
+	//	{
+	//	case -700: //用户未开通直播间时候的错误码
+	//		succeed = false;
+	//		isRoomIdGot = false;
+	//		gBili_roomId = -1;
+	//		QMetaObject::invokeMethod(this, "onBroadcastRoomRequested", Q_ARG(int, 1));
+	//		QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNormalIdle");
+	//		break;
+	//	default:
+	//		QMetaObject::invokeMethod(this, "OnErrorMessage", Q_ARG(QString, QString(customException.what())));
+	//		QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNotRetrived");
+	//		break;
+	//	}
+	//	return 0;
+	//}
+	//catch (CUrlNetworkException&)
+	//{
+	//	//获取推流信息失败，网络错误
+	//	QMetaObject::invokeMethod(this, "OnErrorMessage", Q_ARG(QString, QString(tr("Fail to retrieve pushstream information. Network error."))));
+	//	QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNotRetrived");
+	//	return 0;
+	//}
+	//catch (JsonDataError&)
+	//{
+	//	SaveHttpLogToFile(biliApi->GetLastUrl(), biliApi->GetLastContent());
 
-		//获取推流信息失败，服务器错误
-		QMetaObject::invokeMethod(this, "OnErrorMessage", Q_ARG(QString, QString(tr("Fail to retrieve pushstream information. Server error."))));
-		QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNotRetrived");
-	}
+	//	//获取推流信息失败，服务器错误
+	//	QMetaObject::invokeMethod(this, "OnErrorMessage", Q_ARG(QString, QString(tr("Fail to retrieve pushstream information. Server error."))));
+	//	QMetaObject::invokeMethod(broadcastButtonOperator.get(), "SetNotRetrived");
+	//}
 
-	if (succeed){
-		isRoomIdGot = true;
-		QMetaObject::invokeMethod(this, "sltAutoStartDanmaku");
-	}
+	//if (succeed){
+	//	isRoomIdGot = true;
+	//	QMetaObject::invokeMethod(this, "sltAutoStartDanmaku");
+	//}
 	return 0;
 }
 
@@ -613,15 +567,6 @@ OutputSignalMonitor* BiLiOBSMainWid::StreamingStart()
 	mStartBroadcastTimer();
 
 	broadcastButtonOperator->SetBroadcasting();
-
-	//检查同步录制
-	if (config_get_bool(mBasicConfig, "SimpleOutput", "SyncRec"))
-	{
-		if (recordButtonOperator->GetStatus() == BiliRecordButtonOperator::IDLE)
-		{
-			mSltOnRecordClicked();
-		}
-	}
 
 	return this;
 }
@@ -907,161 +852,10 @@ void BiLiOBSMainWid::mUpdateFansCount() {
 	dmOpt_->setNumOfFans_(request_info_.fansNum);
 }
 
-void BiLiOBSMainWid::mSltOnRecordClicked()
-{
-	if (static_cast<bool>(outputHandler)/* && outputHandler->StreamingActive()*/)
-	{
-		bool succeedStartRecording = outputHandler->StartRecording();
-		if (succeedStartRecording == false)
-			emit OnErrorMessage(tr("Fail to start recording."));
-	}
-	else
-		recordButtonOperator->SetFailed();
-}
-
-void BiLiOBSMainWid::mSltOnRecordStartingClicked()
-{
-	recordButtonOperator->SetStarting();
-}
-
-void BiLiOBSMainWid::mSltOnRecordingClicked()
-{
-	if (static_cast<bool>(outputHandler) && outputHandler->RecordingActive())
-	{
-		outputHandler->StopRecording();
-	}
-}
-
-void BiLiOBSMainWid::mSltOnRecordStoppingClicked()
-{
-}
-
-void BiLiOBSMainWid::mSltOnRecordFailClicked()
-{
-}
-
-void BiLiOBSMainWid::OnRecordTimerTick()
-{
-	time_t currentTime;
-	time(&currentTime);
-
-	time_t deltaTime = currentTime - mRecordStartTime;
-
-	int hour = deltaTime / 3600;
-	int minute = (deltaTime % 3600) / 60;
-	int second = deltaTime % 60;
-
-	char buf[64];
-	sprintf(buf, "%02d:%02d:%02d", hour, minute, second);
-
-	ui.RecTimeLab->setText(buf);
-}
-
-
-void BiLiOBSMainWid::mSltRecordingStart()
-{
-	bili::lock_guard<bili::recursive_mutex> lockguard(outputSignalMonitorMutex);
-	outputSignalMonitor = outputSignalMonitor->RecordingStart();
-}
-
-OutputSignalMonitor* BiLiOBSMainWid::RecordingStart()
-{
-	mStartRecordTimer();
-
-	recordButtonOperator->SetRecording();
-
-	return this;
-}
-
-void BiLiOBSMainWid::mSltRecordingStop()
-{
-	bili::lock_guard<bili::recursive_mutex> lockguard(outputSignalMonitorMutex);
-	outputSignalMonitor = outputSignalMonitor->RecordingStop();
-}
-
-
-OutputSignalMonitor* BiLiOBSMainWid::RecordingStop()
-{
-	recordButtonOperator->SetIdle();
-
-	if (static_cast<bool>(outputHandler)
-		&& static_cast<obs_output_t*>(outputHandler->fileOutput))
-	{
-		obs_data_t* outFileConf = obs_output_get_settings(outputHandler->fileOutput);
-		if (outFileConf)
-		{
-			//获得保存的文件的位置路径
-			const char* outFileUrl = obs_data_get_string(outFileConf, "url");
-			const char* outFilePath = obs_data_get_string(outFileConf, "path");
-			std::string displayFilePath;
-			QString savedMessage = QString(tr("Recorded file saved."));
-
-			if (outFilePath)
-				displayFilePath = outFilePath;
-			else if (outFileUrl)
-				displayFilePath = outFileUrl;
-
-			obs_data_release(outFileConf);
-
-			//修改路径中斜杠的正反
-			if (!displayFilePath.empty())
-			{
-				std::string tmp;
-				base::ReplaceChars(displayFilePath, "/", "\\", &tmp);
-				displayFilePath = tmp;
-			}
-
-			//组装显示的信息
-			if (!displayFilePath.empty())
-			{
-				savedMessage.append("\n");
-				savedMessage.append(displayFilePath.c_str());
-			}
-
-			//判断文件是否存在，显示不同的信息
-			if (base::PathExists(base::FilePath::FromUTF8Unsafe(displayFilePath.c_str())))
-			{
-				QToolTip::showText(QCursor::pos(), savedMessage);
-			}
-			else
-			{
-				QToolTip::showText(QCursor::pos(), tr("File not saved. Maybe recording time is too short."));
-			}
-		}
-	}
-
-	return this;
-}
-
-void BiLiOBSMainWid::mSltRecordingStarting()
-{
-	bili::lock_guard<bili::recursive_mutex> lockguard(outputSignalMonitorMutex);
-	outputSignalMonitor = outputSignalMonitor->RecordingStarting();
-}
-
-OutputSignalMonitor* BiLiOBSMainWid::RecordingStarting()
-{
-	recordButtonOperator->SetStarting();
-	return this;
-}
-
-void BiLiOBSMainWid::mSltRecordingStopping()
-{
-	bili::lock_guard<bili::recursive_mutex> lockguard(outputSignalMonitorMutex);
-	outputSignalMonitor = outputSignalMonitor->RecordingStopping();
-}
-
-OutputSignalMonitor* BiLiOBSMainWid::RecordingStopping()
-{
-	mStopRecordTimer();
-	recordButtonOperator->SetStopping();
-	return this;
-}
-
 void BiLiOBSMainWid::mRequestReconnect()
 {
 	bili::lock_guard<bili::recursive_mutex> lockguard(outputSignalMonitorMutex);
-	OutputSignalMonitor_DoReconnect* reconnectMonitor = new OutputSignalMonitor_DoReconnect(outputHandler.get(), mService, this, broadcastButtonOperator.get(), recordButtonOperator.get());
+	OutputSignalMonitor_DoReconnect* reconnectMonitor = new OutputSignalMonitor_DoReconnect(outputHandler.get(), mService, this, broadcastButtonOperator.get());
 	outputSignalMonitor = reconnectMonitor->Start(outputSignalMonitor);
 }
 
@@ -1079,22 +873,6 @@ void BiLiOBSMainWid::mStopBroadcastTimer()
 {
 	mBroadcastTickTimer.stop();
 	ui.TimeLab->setText(" ");
-}
-
-void BiLiOBSMainWid::mStartRecordTimer()
-{
-	time(&mRecordStartTime);
-	OnRecordTimerTick();
-
-	mRecordTickTimer.setTimerType(Qt::CoarseTimer);
-	mRecordTickTimer.setInterval(300);
-	mRecordTickTimer.start();
-}
-
-void BiLiOBSMainWid::mStopRecordTimer()
-{
-	mRecordTickTimer.stop();
-	ui.RecTimeLab->setText(" ");
 }
 
 void  BiLiOBSMainWid::onTestDmSignal() {
@@ -1144,23 +922,6 @@ void BiLiOBSMainWid::OnBroadcastHotkey(bool isPressed)
 		{
 			mInvokeProcdure(BiliThreadWorker::TaskT(std::bind(&ShowNotice, ":/HotkeyTriggeredNotice/broadcast-stop", tr("Broadcast stopped"))));
 			QMetaObject::invokeMethod(this, "OnStopBroadcastButtonClicked");
-		}
-	}
-}
-
-void BiLiOBSMainWid::OnRecordHotkey(bool isPressed)
-{
-	if (isPressed)
-	{
-		if (recordButtonOperator->GetStatus() == BiliRecordButtonOperator::IDLE)
-		{
-			mInvokeProcdure(BiliThreadWorker::TaskT(std::bind(&ShowNotice, ":/HotkeyTriggeredNotice/record-start", tr("Recorde started"))));
-			QMetaObject::invokeMethod(this, "mSltOnRecordClicked");
-		}
-		else if (recordButtonOperator->GetStatus() == BiliRecordButtonOperator::RECORDING)
-		{
-			mInvokeProcdure(BiliThreadWorker::TaskT(std::bind(&ShowNotice, ":/HotkeyTriggeredNotice/record-stop", tr("Record stoppped"))));
-			QMetaObject::invokeMethod(this, "mSltOnRecordingClicked");
 		}
 	}
 }

@@ -98,12 +98,6 @@ QCheckBox {
           <height>29</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">
-	background-color: #4fc1e9;
-
-</string>
-        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>
@@ -168,7 +162,7 @@ QCheckBox {
             </size>
            </property>
            <property name="text">
-            <string>  请输入来源名称</string>
+            <string> 重命名</string>
            </property>
           </widget>
          </item>
