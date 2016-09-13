@@ -1224,8 +1224,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </Image>
-    <Image Include="Resources\直播姬_官方蓝128.ico" />
-    <Image Include="Resources\直播姬_官方蓝48.ico" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\biliobs_path.h" />

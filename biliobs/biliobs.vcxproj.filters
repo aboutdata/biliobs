@@ -1241,8 +1241,6 @@
     <Image Include="Resources\UI\Img\volumeOver.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="Resources\直播姬_官方蓝48.ico" />
-    <Image Include="Resources\直播姬_官方蓝128.ico" />
     <Image Include="resources\icon_blue.ico" />
   </ItemGroup>
   <ItemGroup>
