@@ -34,6 +34,8 @@
 ####8 把相关的*.effect 拷贝data目录下
 	Debug/data/libobs
 	Debug/data/obs-filters
+####9效果阅览
+![image](https://github.com/aboutdata/biliobs/blob/master/docs/%E6%9C%80%E7%BB%88%E7%BC%96%E8%AF%91%20%E9%98%85%E8%A7%88%E6%95%88%E6%9E%9C%E5%9B%BE.jpg)
 
 ### 直播姬基于或引用了以下项目
 + [Qt5](http://www.qt.io/)
